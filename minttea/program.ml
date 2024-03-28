@@ -1,4 +1,5 @@
 open Riot
+open Minttea_internal
 
 type Message.t += Timer of unit Ref.t | Shutdown
 type 'model t = { app : 'model App.t; fps : int }

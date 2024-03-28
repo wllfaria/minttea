@@ -16,16 +16,15 @@ let translate key =
   | "\n" -> Enter
   | key -> Key key
 
-let rec loop runner =
-  yield ();
-  match Stdin.read_utf8 () with
+let parse_utf8 (module Reader : Input.t) =
+  match Reader.read_utf8 () with
   | `Read key ->
       let msg =
         match key with
         | "\027" -> (
-            match Stdin.read_utf8 () with
+            match Reader.read_utf8 () with
             | `Read "[" -> (
-                match Stdin.read_utf8 () with
+                match Reader.read_utf8 () with
                 | `Read key -> KeyDown (translate ("\027[" ^ key), No_modifier)
                 | _ -> KeyDown (translate key, No_modifier))
             | _ -> KeyDown (translate key, No_modifier))
@@ -37,6 +36,13 @@ let rec loop runner =
             KeyDown (translate key, Ctrl)
         | key -> KeyDown (translate key, No_modifier)
       in
+      Some msg
+  | _ -> None
+
+let rec loop runner =
+  yield ();
+  match parse_utf8 (module Stdin) with
+  | Some msg ->
       send runner (Input msg);
       loop runner
   | _ -> loop runner

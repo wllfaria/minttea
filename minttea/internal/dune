@@ -1,0 +1,4 @@
+(library
+ (name minttea_internal)
+ (public_name minttea.internal)
+ (libraries riot tty))

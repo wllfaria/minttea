@@ -1,4 +1,5 @@
 open Riot
+open Minttea_internal
 module Event = Event
 module Command = Command
 module App = App

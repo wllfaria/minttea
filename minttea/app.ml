@@ -1,3 +1,5 @@
+open Minttea_internal
+
 type 'model t = {
   init : 'model -> Command.t;
   update : Event.t -> 'model -> 'model * Command.t;

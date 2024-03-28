@@ -1,0 +1,4 @@
+(test
+ (name minttea_tests)
+ (libraries minttea alcotest)
+ (modules minttea_tests io_loop_test))

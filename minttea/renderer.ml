@@ -1,5 +1,6 @@
 open Riot
 open Tty
+open Minttea_internal
 
 type Message.t +=
   | Render of string
